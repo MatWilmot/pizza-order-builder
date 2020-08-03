@@ -64,3 +64,36 @@ const startApp = () => {
       }
     });
 };
+
+const getName = () => {
+  inquirer
+    .prompt([
+      {
+        name: "customer_name",
+        message: "Customer name:",
+      },
+    ])
+    .then((res) => {
+      Pizza.name = res.customer_name;
+      console.log(Pizza);
+      getSize();
+    });
+};
+
+const getSize = () => {
+  inquirer
+    .prompt([
+      {
+        name: "pizza_size",
+        type: "list",
+        message: "Pizza size:",
+        choices: sizesArray,
+      },
+    ])
+    .then((res) => {
+      Pizza.size = res.pizza_size;
+      console.log(Pizza);
+    });
+};
+
+startApp();
