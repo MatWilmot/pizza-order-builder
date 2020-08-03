@@ -1,13 +1,19 @@
+// First, bring inquirer into the project
 const inquirer = require("inquirer");
+
+// initialize some variables
 let order;
 let Pizza;
 
 // Let's decide what sizes of pizza we offer
 const sizesArray = ["10 inch", "12 inch", "14 inch", "16 inch"];
+
 // Let's decide what crust types we offer
 const crustArray = ["Thin Crust", "Regular", "Pan", "Stuffed Crust"];
+
 // Let's decide what sauces we offer
 const saucesArray = ["Marinara", "BBQ", "Alfredo Sauce"];
+
 // Let's decide what toppings we offer
 const toppingsArray = [
   "Cheese",
@@ -26,15 +32,16 @@ const toppingsArray = [
   "Green Peppers",
 ];
 
-// Clear out the current order
+// This function allows us to clear out the order variable
 const clearOrder = () => {
-  // The order will contain Pizza objects
+  // The order will be an array containing Pizza objects
   order = [];
+
   // if we're clearing the order, we won't need the current pizza, either
   clearPizza();
 };
 
-// Clear out the current Pizza
+// This function allows us to reset the Pizza object for re-use in an order
 const clearPizza = () => {
   // here we define an empty Pizza object
   Pizza = {
@@ -48,7 +55,6 @@ const clearPizza = () => {
 
 // startApp() will be how we begin the application
 const startApp = () => {
-  clearOrder();
   inquirer
     .prompt([
       {
@@ -68,6 +74,7 @@ const startApp = () => {
     });
 };
 
+// this function gets the user's name and adds it to the Pizza object
 const getName = () => {
   inquirer
     .prompt([
@@ -78,11 +85,11 @@ const getName = () => {
     ])
     .then((res) => {
       Pizza.name = res.customer_name;
-      console.log(Pizza);
       getSize();
     });
 };
 
+// this function gets the size of the pizza and adds it to the Pizza object
 const getSize = () => {
   inquirer
     .prompt([
@@ -95,11 +102,11 @@ const getSize = () => {
     ])
     .then((res) => {
       Pizza.size = res.pizza_size;
-      console.log(Pizza);
       getCrust();
     });
 };
 
+// this function gets the desired crust type and adds it to the Pizza object
 const getCrust = () => {
   inquirer
     .prompt([
@@ -112,11 +119,11 @@ const getCrust = () => {
     ])
     .then((res) => {
       Pizza.crust = res.pizza_crust;
-      console.log(Pizza);
       getSauce();
     });
 };
 
+// this function gets the desired sauce type and adds it to the Pizza object
 const getSauce = () => {
   inquirer
     .prompt([
@@ -129,11 +136,11 @@ const getSauce = () => {
     ])
     .then((res) => {
       Pizza.sauce = res.pizza_sauce;
-      console.log(Pizza);
       getToppings();
     });
 };
 
+// This function creates an array of toppings the user wants and pushes them to the Pizza object
 const getToppings = () => {
   inquirer
     .prompt([
@@ -148,13 +155,14 @@ const getToppings = () => {
       res.pizza_toppings.forEach((topping) => {
         Pizza.toppings.push(topping);
       });
-      console.log("Pizza:", Pizza);
       order.push(Pizza);
-      console.log("Order:", order);
       anotherPizza();
     });
 };
 
+// this function asks if the user wants another pizza in their order
+// if they do, clear the pizza object and start building a new one by getting the customer's name
+// if they don't print the order to the console and go back to the main menu
 const anotherPizza = () => {
   inquirer
     .prompt([
@@ -175,4 +183,5 @@ const anotherPizza = () => {
     });
 };
 
+// since everything is broken down in to functions, we need to actually start the application
 startApp();
