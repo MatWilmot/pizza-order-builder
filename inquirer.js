@@ -48,6 +48,7 @@ const clearPizza = () => {
 
 // startApp() will be how we begin the application
 const startApp = () => {
+  clearOrder();
   inquirer
     .prompt([
       {
@@ -59,7 +60,7 @@ const startApp = () => {
     ])
     .then((res) => {
       if (res.start === "Exit") {
-        exit();
+        return;
       } else {
         clearOrder();
         getName();
@@ -129,6 +130,48 @@ const getSauce = () => {
     .then((res) => {
       Pizza.sauce = res.pizza_sauce;
       console.log(Pizza);
+      getToppings();
+    });
+};
+
+const getToppings = () => {
+  inquirer
+    .prompt([
+      {
+        name: "pizza_toppings",
+        type: "checkbox",
+        message: "Choose toppings:",
+        choices: toppingsArray,
+      },
+    ])
+    .then((res) => {
+      res.pizza_toppings.forEach((topping) => {
+        Pizza.toppings.push(topping);
+      });
+      console.log("Pizza:", Pizza);
+      order.push(Pizza);
+      console.log("Order:", order);
+      anotherPizza();
+    });
+};
+
+const anotherPizza = () => {
+  inquirer
+    .prompt([
+      {
+        name: "another_pizza",
+        type: "confirm",
+        message: "Add another pizza?",
+      },
+    ])
+    .then((res) => {
+      if (res.another_pizza) {
+        clearPizza();
+        getName();
+      } else {
+        console.log("Your order:", order);
+        startApp();
+      }
     });
 };
 
