@@ -112,6 +112,23 @@ const getCrust = () => {
     .then((res) => {
       Pizza.crust = res.pizza_crust;
       console.log(Pizza);
+      getSauce();
+    });
+};
+
+const getSauce = () => {
+  inquirer
+    .prompt([
+      {
+        name: "pizza_sauce",
+        type: "list",
+        message: "Sauce type:",
+        choices: saucesArray,
+      },
+    ])
+    .then((res) => {
+      Pizza.sauce = res.pizza_sauce;
+      console.log(Pizza);
     });
 };
 
